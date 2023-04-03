@@ -18,7 +18,7 @@ function Nav() {
   useEffect(() => {
     window.addEventListener('scroll', transitionNavBar);
 
-    // add a clean up function
+    // add a clean up function that will run after updating the DOM
     return () => window.removeEventListener('scroll', transitionNavBar);
   }, []);
 
