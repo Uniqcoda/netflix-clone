@@ -1,13 +1,15 @@
 .banner {
   position: relative;
-  height: 448px;
+  /* height: 448px; */
+  height: 500px;
   object-fit: contain;
   color: white;
 }
 
 .banner__contents {
   margin-left: 30px;
-  padding-top: 140px;
+  /* padding-top: 140px; */
+  padding-top: 192px;
   height: 190px;
 }
 
