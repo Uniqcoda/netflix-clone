@@ -20,8 +20,6 @@ function Banner() {
     };
 
     fetchData();
-
-    // cleanup
   }, []);
 
   console.log({ movie });
