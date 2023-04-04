@@ -22,8 +22,6 @@ function Banner() {
     fetchData();
   }, []);
 
-  console.log({ movie });
-
   return (
     <header
       className='banner'
