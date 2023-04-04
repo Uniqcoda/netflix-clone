@@ -1,6 +1,7 @@
 import React from 'react';
 import Banner from './Banner';
 import Nav from './Nav';
+import Rows from './Rows';
 
 import './HomeScreen.css';
 
@@ -9,7 +10,7 @@ function HomeScreen() {
     <div className='homeScreen'>
       <Nav />
       <Banner />
-      {/* Rows */}
+      <Rows />
     </div>
   );
 }
