@@ -11,9 +11,11 @@ function LoginScreen() {
     <div className='loginScreen'>
       <div className='loginScreen__background'>
         <img src={NetflixLogo} alt='' className='loginScreen__logo' />
-        <button className='loginScreen__button' onClick={() => setSignIn(true)}>
-          Sign In
-        </button>
+        {!signIn && (
+          <button className='loginScreen__button' onClick={() => setSignIn(true)}>
+            Sign In
+          </button>
+        )}
         <div className='loginScreen__gradient'></div>
       </div>
       <div className='loginScreen__body'>
