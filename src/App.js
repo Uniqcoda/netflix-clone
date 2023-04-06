@@ -25,7 +25,6 @@ const AuthRoute = ({ isLoggedIn, children }) => {
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const user = useSelector(selectUser);
   const dispatch = useDispatch();
 
   useEffect(() => {
