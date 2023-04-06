@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import HomeScreen from './screens/Home';
+import HomeScreen from './screens/HomeScreen';
 import Login from './screens/LoginScreen';
 import { auth } from './firebase';
 import { login, logout, selectUser } from './features/userSlice';
 import './App.css';
+import ProfileScreen from './screens/ProfileScreen';
 
 function App() {
   // const user = {};
@@ -22,21 +23,26 @@ function App() {
             email: userAuth.email,
           })
         );
-        // console.log({ userAuth });
       } else {
         // Logged out
         dispatch(logout);
-        // console.log('Logged Out');
       }
     });
 
     return unsubscribe;
-  }, []);
+  }, [dispatch]);
+
   return (
     <div className='app'>
       <Router>
         <Routes>
-          {user ? <Route path='/' element={<HomeScreen />} /> : <Route path='/login' element={<Login />} />}
+          {user ? (
+            <>
+              <Route path='/' element={<HomeScreen />} /> <Route path='/profile' element={<ProfileScreen />} />
+            </>
+          ) : (
+            <Route path='/login' element={<Login />} />
+          )}
         </Routes>
       </Router>
     </div>
