@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../firebase';
 import './index.css';
@@ -6,6 +7,7 @@ import './index.css';
 function SignUpScreen() {
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
+  const navigate = useNavigate();
 
   const register = (e) => {
     e.preventDefault();
@@ -13,6 +15,7 @@ function SignUpScreen() {
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
+        if (user) navigate('/');
       })
       .catch((error) => {
         // const errorCode = error.code;
@@ -28,6 +31,7 @@ function SignUpScreen() {
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
+        if (user) navigate('/');
       })
       .catch((error) => {
         // const errorCode = error.code;

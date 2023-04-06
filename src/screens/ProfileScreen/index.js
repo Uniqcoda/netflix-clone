@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import Nav from '../../Nav';
 import Plans from '../../components/Plans';
 import NetflixAvatar from '../../assets/Netflix-avatar.png';
@@ -10,6 +11,11 @@ import './index.css';
 
 function ProfileScreen() {
   const user = useSelector(selectUser);
+  const navigate = useNavigate();
+  const signOut = () => {
+    auth.signOut();
+    navigate('/login');
+  };
 
   return (
     <div className='profileScreen'>
@@ -23,7 +29,7 @@ function ProfileScreen() {
             <div className='profileScreen__plans'>
               <h3>Plans</h3>
               <Plans />
-              <button onClick={() => auth.signOut()} className='profileScreen__signOut'>
+              <button onClick={signOut} className='profileScreen__signOut'>
                 Sign Out
               </button>
             </div>
