@@ -48,7 +48,6 @@ function App() {
 
     return unsubscribe;
   }, [dispatch]);
-  console.log({ user });
 
   return (
     <div className='app'>
