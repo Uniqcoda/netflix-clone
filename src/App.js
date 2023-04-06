@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import HomeScreen from './screens/HomeScreen';
 import Login from './screens/LoginScreen';
 import { auth } from './firebase';
-import { login, logout, selectUser } from './features/userSlice';
+import { login, logout } from './features/userSlice';
 import './App.css';
 import ProfileScreen from './screens/ProfileScreen';
 
