@@ -29,7 +29,7 @@
   margin-bottom: 20px;
 }
 
-.loginScreen__body > h2 {
+.loginScreen__body > h3 {
   font-size: 1.3rem;
   font-weight: 400;
 }
@@ -85,4 +85,38 @@
   background-color: #e50914;
   font-weight: 600;
   cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  .loginScreen__body {
+    top: 20%;
+  }
+  .loginScreen__body > h1 {
+    font-size: 2.2rem;
+  }
+  
+  .loginScreen__body > h2 {
+    font-size: 1.5rem;
+  }
+  
+  .loginScreen__body > h3 {
+    font-size: 1rem;
+  }
+
+  .loginScreen__logo {
+    width: 130px;
+  }
+
+.loginScreen__input > form > input {
+  padding: 8px;
+  outline-width: 0;
+  height: 27px;
+  width: 50%;
+}
+  
+  .loginScreen__getStarted {
+    padding: 14px 18px;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
 }

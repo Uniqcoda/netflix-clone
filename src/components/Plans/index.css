@@ -22,3 +22,23 @@
 .plansScreen__plan--disabled > button {
   background-color: gray !important;
 }
+
+.plansScreen__info > h5 {
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.plansScreen__info > h6 {
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+@media (max-width: 600px) {
+  .plansScreen__info > h5 {
+    font-size: 0.9rem;
+  }
+
+  .plansScreen__info > h6 {
+    font-size: 0.7rem;
+  }
+}
