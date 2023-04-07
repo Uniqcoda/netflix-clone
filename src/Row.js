@@ -9,7 +9,6 @@ function Row({ title, fetchUrl, isLargeRow = false }) {
 
   const fetchData = useCallback(async () => {
     const request = await axios.get(fetchUrl);
-    console.log({ request });
     setMovies(request.data.results);
     return request;
   },[fetchUrl]);
