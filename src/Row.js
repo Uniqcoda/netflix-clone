@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import axios from './axios';
 
 import './Row.css';
@@ -7,15 +7,18 @@ function Row({ title, fetchUrl, isLargeRow = false }) {
   const [movies, setMovies] = useState([]);
   const base_url = 'https://image.tmdb.org/t/p/original';
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const request = await axios.get(fetchUrl);
-      setMovies(request.data.results);
-      return request;
-    };
+  const fetchData = useCallback(async () => {
+    const request = await axios.get(fetchUrl);
+    console.log({ request });
+    setMovies(request.data.results);
+    return request;
+  },[fetchUrl]);
 
-    return fetchData;
-  }, [fetchUrl]);
+  useEffect(() => {
+    fetchData();
+
+    return () => {};
+  }, [fetchData]);
 
   return (
     <div className='row'>

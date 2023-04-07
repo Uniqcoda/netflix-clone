@@ -62,5 +62,6 @@
   .banner__description {
     font-size: 0.8rem;
     max-width: 320px;
+    font-weight: 600;
   }
 }
