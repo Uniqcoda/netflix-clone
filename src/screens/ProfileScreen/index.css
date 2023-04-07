@@ -56,7 +56,29 @@
   margin-top: 5%;
   color: white;
   background-color: #e50914;
-  /* outline-width: 0; */
   border: none;
   cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  .profileScreen__body > h1 {
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  .profileScreen__body {
+    display: flex;
+    flex-direction: column;
+    margin-left: 30px;
+    min-width: 300px;
+    padding-top: 80px;
+  }
+
+  .profileScreen__info > img {
+    display: none;
+  }
+
+  .profileScreen__details {
+    margin-left: 0px;
+  }
 }
