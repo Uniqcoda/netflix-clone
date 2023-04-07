@@ -28,7 +28,7 @@ function Banner() {
       className='banner'
       style={{
         backgroundImage: `${
-          movie ? `url('https://image.tmdb.org/t/p/original/${movie?.backdrop_path}')` : `url(${NetflixBanner})`
+          movie ? `url('https://image.tmdb.org/t/p/original${movie?.backdrop_path}')` : `url(${NetflixBanner})`
         }`,
         backgroundSize: 'cover',
         backgroundPosition: 'center center',
