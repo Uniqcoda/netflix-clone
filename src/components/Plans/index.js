@@ -6,8 +6,7 @@ import { useSelector } from 'react-redux';
 import { selectUser } from '../../features/userSlice';
 import './index.css';
 
-const STRIPE_API_KEY =
-  'pk_test_51MthXCLFHIzTLeYM28x3XHAChD1lthidQTGw6T8KxIyHjxVhLtOmx5ty1wL4Gee96s0a5DmEE32SfuuSfx9arjsR008jc2qSMX';
+const STRIPE_API_KEY =process.env.REACT_APP_STRIPE_API_KEY;
 
 function Plans() {
   const [products, setProducts] = useState([]);

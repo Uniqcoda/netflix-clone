@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from './axios';
 import Requests from './Requests';
+import NetflixBanner from './assets/Netflix-banner.png';
 
 import './Banner.css';
 
@@ -26,7 +27,9 @@ function Banner() {
     <header
       className='banner'
       style={{
-        backgroundImage: `url('https://image.tmdb.org/t/p/original/${movie?.backdrop_path}')`,
+        backgroundImage: `${
+          movie ? `url('https://image.tmdb.org/t/p/original/${movie?.backdrop_path}')` : `url(${NetflixBanner})`
+        }`,
         backgroundSize: 'cover',
         backgroundPosition: 'center center',
       }}
