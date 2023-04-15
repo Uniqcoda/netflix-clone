@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { collection, query, where, getDocs, doc, addDoc, onSnapshot } from 'firebase/firestore';
 import { loadStripe } from '@stripe/stripe-js';
-import db from '../../firebase';
+import db from '../../utils/firebase';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../features/userSlice';
 import './index.css';

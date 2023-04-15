@@ -1,11 +1,11 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import Nav from '../../Nav';
+import Nav from '../../components/Nav';
 import Plans from '../../components/Plans';
 import NetflixAvatar from '../../assets/Netflix-avatar.png';
 import { selectUser } from '../../features/userSlice';
-import { auth } from '../../firebase';
+import { auth } from '../../utils/firebase';
 
 import './index.css';
 

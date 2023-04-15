@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import HomeScreen from './screens/HomeScreen';
 import Login from './screens/LoginScreen';
-import { auth } from './firebase';
+import { auth } from './utils/firebase';
 import { login, logout } from './features/userSlice';
 import './App.css';
 import ProfileScreen from './screens/ProfileScreen';

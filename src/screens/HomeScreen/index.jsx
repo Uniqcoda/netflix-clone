@@ -1,7 +1,7 @@
 import React from 'react';
-import Banner from '../../Banner';
-import Nav from '../../Nav';
-import Rows from '../../Rows';
+import Banner from '../../components/Banner';
+import Nav from '../../components/Nav';
+import Rows from '../../components/Rows';
 
 import './index.css';
 

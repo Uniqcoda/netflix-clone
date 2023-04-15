@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import axios from './axios';
-import Requests from './Requests';
-import NetflixBanner from './assets/Netflix-banner.png';
+import axios from '../../utils/axios';
+import Requests from '../../utils/Requests';
+import NetflixBanner from '../../assets/Netflix-banner.png';
 
-import './Banner.css';
+import './index.css';
 
 function Banner() {
   const [movie, setMovie] = useState();
