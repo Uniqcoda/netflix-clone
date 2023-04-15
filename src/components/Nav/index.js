@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import NetflixLogo from './assets/Netflix-logo.png';
-import NetflixAvatar from './assets/Netflix-avatar.png';
+import NetflixLogo from '../../assets/Netflix-logo.png';
+import NetflixAvatar from '../../assets/Netflix-avatar.png';
 
-import './Nav.css';
+import './index.css';
 
 function Nav() {
   const [show, handleShow] = useState(false);
