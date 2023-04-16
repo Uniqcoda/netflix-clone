@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { FaSearch, FaRegBell, FaCaretDown, FaCaretUp } from 'react-icons/fa';
+import { FaSearch, FaRegBell, FaCaretDown } from 'react-icons/fa';
 import NetflixLogo from '../../assets/Netflix-logo.png';
 import NetflixAvatar from '../../assets/Netflix-avatar.png';
 
@@ -15,9 +15,12 @@ function Nav() {
 
   const links = [
     { name: 'Home', link: '/' },
-    { name: 'TV Shows', link: '/tv' },
-    { name: 'Movies', link: '/movies' },
-    { name: 'My List', link: '/mylist' },
+    // { name: 'TV Shows', link: '/tv' },
+    // { name: 'Movies', link: '/movies' },
+    // { name: 'My List', link: '/mylist' },
+    { name: 'TV Shows', link: '/' },
+    { name: 'Movies', link: '/' },
+    { name: 'My List', link: '/' },
   ];
 
   const transitionNavBar = () => {
