@@ -15,9 +15,12 @@ function Nav() {
 
   const links = [
     { name: 'Home', link: '/' },
-    { name: 'TV Shows', link: '/tv' },
-    { name: 'Movies', link: '/movies' },
-    { name: 'My List', link: '/mylist' },
+    // { name: 'TV Shows', link: '/tv' },
+    // { name: 'Movies', link: '/movies' },
+    // { name: 'My List', link: '/mylist' },
+    { name: 'TV Shows', link: '/' },
+    { name: 'Movies', link: '/' },
+    { name: 'My List', link: '/' },
   ];
 
   const transitionNavBar = () => {
