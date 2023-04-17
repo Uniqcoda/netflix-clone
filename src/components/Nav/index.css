@@ -131,4 +131,9 @@ li > a {
   .nav_links {
     display: none;
   }
+
+  .show-search {
+    width: 120px;
+  }
+
 }
