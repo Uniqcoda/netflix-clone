@@ -81,17 +81,16 @@ function Nav() {
           />
         </div>
         <div className='nav__notifications'>
-            <FaRegBell />
+          <FaRegBell />
         </div>
-        <div className='nav__avatar'>
+        <div
+          className='nav__avatar'
+          onClick={() => {
+            navigate('/profile');
+          }}
+        >
           <span>
-            <img
-              src={NetflixAvatar}
-              onClick={() => {
-                navigate('/profile');
-              }}
-              alt=''
-            />
+            <img src={NetflixAvatar} alt='' />
           </span>
           <span>
             <FaCaretDown />
