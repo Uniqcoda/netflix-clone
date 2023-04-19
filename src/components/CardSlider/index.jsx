@@ -23,7 +23,7 @@ function CardSlider({ data, title }) {
   return (
     <div
       className='cardSlider'
-      showControls={showControls}
+      // showControls={showControls}
       onMouseEnter={() => setShowControls(true)}
       onMouseLeave={() => setShowControls(false)}
     >
@@ -33,8 +33,8 @@ function CardSlider({ data, title }) {
           <AiOutlineLeft onClick={() => handleDirection('left')} />
         </div>
         <div className='slider' ref={listRef}>
-          {data.map((movie, index) => {
-            return <Card movieData={movie} index={index} key={movie.id} />;
+          {data.map((movie) => {
+            return <Card movieData={movie} key={movie.id} />;
           })}
         </div>
         <div className={`slider-action right ${!showControls ? 'none' : ''}`}>

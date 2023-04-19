@@ -13,7 +13,7 @@
   z-index: 10;
 }
 
-.hover {
+.movieCard > .hover {
   z-index: 99;
   height: max-content;
   width: 20rem;
@@ -26,7 +26,7 @@
   transition: 0.3s ease-in-out;
 }
 
-.hover > .image-video-container {
+.image-video-container {
   position: relative;
   height: 140px;
 }
@@ -69,13 +69,13 @@
   gap: 1rem;
 }
 
-.icons > svg {
-  font-size: 2rem;
+.icons svg {
+  font-size: 1.8rem;
   cursor: pointer;
   transition: 0.3s ease-in-out;
 }
 
-.icons > svg:hover {
+.icons svg:hover {
   color: #b8b8b8;
 }
 

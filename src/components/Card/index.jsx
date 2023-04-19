@@ -8,7 +8,7 @@ import { BsCheck } from 'react-icons/bs';
 import video from '../../assets/video.mp4';
 import './index.css';
 
-function Card({ index, movieData, isLiked = false }) {
+function Card({ movieData, isLiked = false }) {
   const navigate = useNavigate();
   const [isHovered, setIsHovered] = useState(false);
 
@@ -24,7 +24,7 @@ function Card({ index, movieData, isLiked = false }) {
               alt='card'
               onClick={() => navigate('/player')}
             />
-            <video src={video} autoPlay={true} loop muted onClick={() => navigate('/player')} />
+            <video src={video} autoPlay={true} loop muted onClick={() => navigate('/player')} type='video/mp4' />
           </div>
           <div className='info-container'>
             <h3 className='name' onClick={() => navigate('/player')}>
@@ -35,14 +35,7 @@ function Card({ index, movieData, isLiked = false }) {
                 <IoPlayCircleSharp title='Play' onClick={() => navigate('/player')} />
                 <RiThumbUpFill title='Like' />
                 <RiThumbDownFill title='Dislike' />
-                {isLiked ? (
-                  <BsCheck
-                    title='Remove from List'
-                  />
-                ) : (
-                  <AiOutlinePlus title='Add to my list' />
-                  
-                )}
+                {isLiked ? <BsCheck title='Remove from List' /> : <AiOutlinePlus title='Add to my list' />}
               </div>
               <div className='info'>
                 <BiChevronDown title='More Info' />
@@ -50,8 +43,8 @@ function Card({ index, movieData, isLiked = false }) {
             </div>
             <div className='genres'>
               <ul>
-                {movieData.genres.map((genre) => (
-                  <li>{genre}</li>
+                {movieData.genres.map((genre, index) => (
+                  <li key={index}>{genre}</li>
                 ))}
               </ul>
             </div>
