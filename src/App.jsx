@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import HomeScreen from './screens/HomeScreen';
 import Login from './screens/LoginScreen';
+import PlayerScreen from './screens/Player';
 import { auth } from './utils/firebase';
 import { login, logout } from './features/userSlice';
 import './App.css';
@@ -64,6 +65,14 @@ function App() {
           element={
             <ProtectedRoute isLoggedIn={isLoggedIn}>
               <ProfileScreen />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path='/player'
+          element={
+            <ProtectedRoute isLoggedIn={isLoggedIn}>
+              <PlayerScreen />
             </ProtectedRoute>
           }
         />

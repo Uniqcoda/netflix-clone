@@ -20,6 +20,7 @@ function Nav() {
     // { name: 'My List', link: '/mylist' },
     { name: 'TV Shows', link: '/' },
     { name: 'Movies', link: '/' },
+    { name: 'New & Popular', link: '/' },
     { name: 'My List', link: '/' },
   ];
 

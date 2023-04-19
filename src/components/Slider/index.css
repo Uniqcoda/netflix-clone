@@ -1,0 +1,10 @@
+.allMovies {
+  position: relative;
+  top: -220px;
+}
+
+@media (max-width: 992px) {
+  .allMovies {
+    top: -180px;
+  }
+}
