@@ -1,16 +1,34 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import Banner from '../../components/Banner';
 import Nav from '../../components/Nav';
-import Rows from '../../components/Rows';
+import Slider from '../../components/Slider';
+import { fetchMovies, getGenres } from "../../store";
 
 import './index.css';
 
 function HomeScreen() {
+  const movies = useSelector((state) => state.netflix.movies);
+  const genres = useSelector((state) => state.netflix.genres);
+  const genresLoaded = useSelector((state) => state.netflix.genresLoaded);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getGenres());
+  }, []);
+
+  useEffect(() => {
+    if (genresLoaded) {
+      dispatch(fetchMovies({ genres, type: 'all' }));
+    }
+  }, [genresLoaded]);
+
   return (
     <div className='homeScreen'>
       <Nav />
       <Banner />
-      <Rows />
+      <Slider movies={movies} />
+
     </div>
   );
 }

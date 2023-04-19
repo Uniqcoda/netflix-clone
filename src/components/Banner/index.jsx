@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { FaPlay } from 'react-icons/fa';
+import { AiOutlineInfoCircle } from 'react-icons/ai';
 import axios from '../../utils/axios';
 import Requests from '../../utils/Requests';
 import NetflixBanner from '../../assets/Netflix-banner.png';
@@ -7,6 +10,8 @@ import './index.css';
 
 function Banner() {
   const [movie, setMovie] = useState();
+
+  const navigate = useNavigate();
 
   const truncate = (string, n) => {
     return string?.length > n ? string.substr(0, n - 1) + '...' : string;
@@ -24,7 +29,7 @@ function Banner() {
   }, []);
 
   return (
-    <header
+    <div
       className='banner'
       style={{
         backgroundImage: `${
@@ -36,14 +41,20 @@ function Banner() {
     >
       <div className='banner__contents'>
         <h1 className='banner__title'>{movie?.title || movie?.name || movie?.original_name || 'Movie Title'}</h1>
-        <div className='banner-buttons'>
-          <button className='banner__button'>Play</button>
-          <button className='banner__button'>My List</button>
+        <div className='banner__buttons'>
+          <button className='banner__button' onClick={() => navigate('/player')}>
+            <FaPlay />
+            Play
+          </button>
+          <button className='banner__button'>
+            <AiOutlineInfoCircle />
+            More Info
+          </button>
         </div>
         <h2 className='banner__description'>{truncate(movie?.overview, 150) || 'Movie description'}</h2>
       </div>
       <div className='banner--fadeBottom' />
-    </header>
+    </div>
   );
 }
 
