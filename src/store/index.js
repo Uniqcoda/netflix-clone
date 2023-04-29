@@ -19,14 +19,15 @@ export const getGenres = createAsyncThunk('netflix/genres', async () => {
 const createArrayFromRawData = (array, moviesArray, genres) => {
   array.forEach((movie) => {
     const movieGenres = [];
-    movie.genre_ids.forEach((genre) => {
-      const name = genres.find(({ id }) => id === genre);
+    movie.genre_ids.forEach((genreId) => {
+      const name = genres.find(({ id }) => id === genreId);
       if (name) movieGenres.push(name.name);
     });
+    // If a movie does not have a back_drop image, it would be skipped
     if (movie.backdrop_path)
       moviesArray.push({
         id: movie.id,
-        name: movie?.original_name ? movie.original_name : movie.original_title,
+        name: movie?.name || movie?.title || movie?.original_title || movie?.original_name || 'Movie Title',
         image: movie.backdrop_path,
         genres: movieGenres.slice(0, 3),
       });
@@ -35,6 +36,8 @@ const createArrayFromRawData = (array, moviesArray, genres) => {
 
 const getRawData = async (api, genres, paging = false) => {
   const moviesArray = [];
+  // There are 20 movies per page for each API request, therefore, this loop will run 3 times to fetch 60 movies.
+  // If any movie is skipped due to the back_drop condition, then the loop will run more times but less than 10 times.
   for (let i = 1; moviesArray.length < 60 && i < 10; i++) {
     const {
       data: { results },
@@ -104,7 +107,6 @@ export const store = configureStore({
   reducer: {
     netflix: NetflixSlice.reducer,
     user: userReducer,
-
   },
 });
 

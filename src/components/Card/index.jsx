@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { IoPlayCircleSharp } from 'react-icons/io5';
 import { AiOutlinePlus } from 'react-icons/ai';
-import { RiThumbUpFill, RiThumbDownFill } from 'react-icons/ri';
+import { BsHandThumbsUp } from 'react-icons/bs';
 import { BiChevronDown } from 'react-icons/bi';
 import { BsCheck } from 'react-icons/bs';
 import video from '../../assets/video.mp4';
@@ -33,9 +33,8 @@ function Card({ movieData, isLiked = false }) {
             <div className='icons'>
               <div className='controls'>
                 <IoPlayCircleSharp title='Play' onClick={() => navigate('/player')} />
-                <RiThumbUpFill title='Like' />
-                <RiThumbDownFill title='Dislike' />
                 {isLiked ? <BsCheck title='Remove from List' /> : <AiOutlinePlus title='Add to my list' />}
+                <BsHandThumbsUp title='Like' />
               </div>
               <div className='info'>
                 <BiChevronDown title='More Info' />

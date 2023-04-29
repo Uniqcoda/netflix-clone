@@ -10,13 +10,12 @@
   border-radius: 0.2rem;
   width: 100%;
   height: 100%;
-  z-index: 10;
 }
 
 .movieCard > .hover {
   z-index: 99;
   height: max-content;
-  width: 20rem;
+  width: 17rem;
   position: absolute;
   top: -18vh;
   left: 0;
@@ -36,7 +35,6 @@
   height: 140px;
   object-fit: cover;
   border-radius: 0.3rem;
-  top: 0;
   z-index: 4;
   position: absolute;
 }
@@ -46,8 +44,7 @@
   height: 140px;
   object-fit: cover;
   border-radius: 0.3rem;
-  top: 0;
-  z-index: 5;
+  z-index: 4;
   position: absolute;
 }
 
@@ -63,14 +60,13 @@
   justify-content: space-between;
 }
 
-
 .icons > .controls {
   display: flex;
-  gap: 1rem;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .icons svg {
-  font-size: 1.8rem;
   cursor: pointer;
   transition: 0.3s ease-in-out;
 }
@@ -79,18 +75,45 @@
   color: #b8b8b8;
 }
 
-.genres {
+.icons > .controls > svg:not(:first-child),
+.icons > .info > svg {
+  border: solid #b8b8b8 1.5px;
+  border-radius: 50px;
+}
+
+.icons > .controls > svg:not(:first-child) {
+  font-size: 1.1rem;
+  padding: 8px;
+}
+
+.icons > .controls > svg:first-of-type {
+  font-size: 2.8rem;
+}
+
+.icons > .info {
+  display: flex;
+  align-items: center;
+}
+
+.icons > .info > svg {
+  font-size: 1.6rem;
+  padding: 4px;
+}
+
+.info-container > .genres {
   display: flex;
 }
 
-.genres > ul {
+.info-container > .genres > ul {
   display: flex;
-  gap: 1rem;
+  /* flex-wrap: wrap; */
+  gap: 0.6rem;
+  padding-left: 0;
 }
 
-.genres li {
+.info-container > .genres li {
   padding-right: 0.7rem;
 }
-.genres li:first-of-type {
+.info-container > .genres li:first-of-type {
   list-style-type: none;
 }

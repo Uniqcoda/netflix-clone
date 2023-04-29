@@ -10,10 +10,6 @@
   margin-left: 30px;
 }
 
-.cardSlider__wrapper {
-  overflow-x: scroll;
-}
-
 .cardSlider__wrapper::-webkit-scrollbar {
   display: none;
 }
