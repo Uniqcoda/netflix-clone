@@ -15,15 +15,13 @@ function HomeScreen() {
 
   useEffect(() => {
     dispatch(getGenres());
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (genresLoaded) {
       dispatch(fetchMovies({ genres, type: 'all' }));
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [genresLoaded]);
+  }, [dispatch, genres, genresLoaded]);
 
   return (
     <div className='homeScreen'>
