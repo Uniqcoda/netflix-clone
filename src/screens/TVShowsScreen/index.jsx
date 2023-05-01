@@ -7,7 +7,7 @@ import Slider from '../../components/Slider';
 import NotAvailable from '../../components/NotAvailable';
 import './index.css';
 
-function MoviesScreen() {
+function TVShowsScreen() {
   const movies = useSelector((state) => state.netflix.movies);
   const genres = useSelector((state) => state.netflix.genres);
   const genresLoaded = useSelector((state) => state.netflix.genresLoaded);
@@ -20,7 +20,7 @@ function MoviesScreen() {
 
   useEffect(() => {
     if (genresLoaded) {
-      dispatch(fetchMovies({ genres, type: 'movie' }));
+      dispatch(fetchMovies({ genres, type: 'tv' }));
     }
   }, [dispatch, genres, genresLoaded]);
 
@@ -30,11 +30,11 @@ function MoviesScreen() {
         <Nav />
       </div>
       <div className='data'>
-        <SelectGenre genres={genres} type='movie' />
-        {movies.length ? <Slider movies={movies} /> : <NotAvailable type='movies' />}
+        <SelectGenre genres={genres} type='tv' />
+        {movies.length ? <Slider movies={movies} /> : <NotAvailable type='TV shows' />}
       </div>
     </div>
   );
 }
 
-export default MoviesScreen;
+export default TVShowsScreen;
