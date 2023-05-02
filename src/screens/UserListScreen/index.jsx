@@ -23,7 +23,7 @@ export default function UserList() {
       <div className='content'>
         <h1>My List</h1>
         <div className='grid'>
-          {movies ? (
+          {movies.length > 0 ? (
             movies.map((movie, index) => {
               return <Card movieData={movie} index={index} key={movie.id} isLiked={true} />;
             })
