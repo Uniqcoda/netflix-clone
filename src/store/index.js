@@ -1,5 +1,7 @@
 import { configureStore, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { collection, query, where, getDocs, doc, addDoc, updateDoc } from 'firebase/firestore';
+import db from '../utils/firebase';
 import userReducer from '../features/userSlice';
 import { API_KEY, TMDB_BASE_URL } from '../utils/constants';
 
@@ -7,6 +9,7 @@ const initialState = {
   movies: [],
   genresLoaded: false,
   genres: [],
+  userList: []
 };
 
 export const getGenres = createAsyncThunk('netflix/genres', async () => {
@@ -63,22 +66,50 @@ export const fetchMovies = createAsyncThunk('netflix/trending', async ({ type },
   return getRawData(`${TMDB_BASE_URL}/trending/${type}/week?api_key=${API_KEY}`, genres, true);
 });
 
-// export const getUsersLikedMovies = createAsyncThunk('netflix/getLiked', async (email) => {
-//   const {
-//     data: { movies },
-//   } = await axios.get(`http://localhost:5000/api/user/liked/${email}`);
-//   return movies;
-// });
+export const addToLikes = createAsyncThunk('netflix/addLike', async ({ movieData, userId }) => {
+  try {
+    // Check if user has a movie list
+    const q = query(collection(db, 'movie-lists'), where('userId', '==', userId));
+    const querySnapshot = await getDocs(q);
 
-// export const removeMovieFromLiked = createAsyncThunk('netflix/deleteLiked', async ({ movieId, email }) => {
-//   const {
-//     data: { movies },
-//   } = await axios.put('http://localhost:5000/api/user/remove', {
-//     email,
-//     movieId,
-//   });
-//   return movies;
-// });
+    if (!querySnapshot.empty) {
+      // update list
+      const docSnapshot = querySnapshot.docs[0];
+      const movieList = docSnapshot.data();
+      movieList.movies.push(movieData);
+      await updateDoc(doc(db, 'movie-lists', docSnapshot.id), { movies: movieList.movies });
+      alert('Movie added to your list');
+    } else {
+      // create new list
+      const movieListsRef = collection(db, 'movie-lists');
+      console.log({ movieListsRef });
+      await addDoc(movieListsRef, {
+        userId,
+        movies: [movieData],
+      });
+      alert('Movie added to your list');
+    }
+  } catch (error) {
+    console.log({ error });
+  }
+});
+
+export const getUsersLikedMovies = createAsyncThunk('netflix/getLiked', async (userId) => {
+  let userList = [];
+  const q = query(collection(db, 'movie-lists'), where('userId', '==', userId));
+  const querySnapshot = await getDocs(q);
+
+  if (!querySnapshot.empty) {
+    const docSnapshot = querySnapshot.docs[0];
+    const movieList = docSnapshot.data();
+    userList = movieList.movies;
+  }
+  return userList;
+});
+
+export const removeMovieFromLiked = createAsyncThunk('netflix/deleteLiked', async ({ movieData, userId }) => {
+  // todo
+});
 
 const NetflixSlice = createSlice({
   name: 'Netflix',
@@ -94,12 +125,15 @@ const NetflixSlice = createSlice({
     builder.addCase(fetchDataByGenre.fulfilled, (state, action) => {
       state.movies = action.payload;
     });
-    // builder.addCase(getUsersLikedMovies.fulfilled, (state, action) => {
+    // builder.addCase(addToLikes.fulfilled, (state, action) => {
     //   state.movies = action.payload;
     // });
-    // builder.addCase(removeMovieFromLiked.fulfilled, (state, action) => {
-    //   state.movies = action.payload;
-    // });
+    builder.addCase(getUsersLikedMovies.fulfilled, (state, action) => {
+      state.userList = action.payload;
+    });
+    builder.addCase(removeMovieFromLiked.fulfilled, (state, action) => {
+      state.userList = action.payload;
+    });
   },
 });
 

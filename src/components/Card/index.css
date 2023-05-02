@@ -15,7 +15,7 @@
 .movieCard > .hover {
   z-index: 99;
   height: max-content;
-  width: 17rem;
+  width: 18rem;
   position: absolute;
   top: -18vh;
   left: 0;

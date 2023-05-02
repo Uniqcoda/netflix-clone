@@ -26,9 +26,7 @@ function MoviesScreen() {
 
   return (
     <div className='moviesScreen'>
-      <div className='navbar'>
-        <Nav />
-      </div>
+      <Nav />
       <div className='data'>
         <SelectGenre genres={genres} type='movie' />
         {movies.length ? <Slider movies={movies} /> : <NotAvailable type='movies' />}
