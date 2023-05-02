@@ -23,7 +23,6 @@ function CardSlider({ data, title }) {
   return (
     <div
       className='cardSlider'
-      // showControls={showControls}
       onMouseEnter={() => setShowControls(true)}
       onMouseLeave={() => setShowControls(false)}
     >

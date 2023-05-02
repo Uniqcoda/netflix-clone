@@ -9,7 +9,7 @@ const initialState = {
   movies: [],
   genresLoaded: false,
   genres: [],
-  userList: []
+  userList: [],
 };
 
 export const getGenres = createAsyncThunk('netflix/genres', async () => {
@@ -73,9 +73,16 @@ export const addToLikes = createAsyncThunk('netflix/addLike', async ({ movieData
     const querySnapshot = await getDocs(q);
 
     if (!querySnapshot.empty) {
-      // update list
       const docSnapshot = querySnapshot.docs[0];
       const movieList = docSnapshot.data();
+      // check if movie is already in user list
+      const index = movieList.movies.findIndex((movie) => movie.id === movieData.id);
+
+      if (index > -1) {
+        alert('Movie already added to your list');
+        return;
+      }
+      // update list
       movieList.movies.push(movieData);
       await updateDoc(doc(db, 'movie-lists', docSnapshot.id), { movies: movieList.movies });
       alert('Movie added to your list');
