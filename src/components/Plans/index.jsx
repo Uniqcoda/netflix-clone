@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { collection, query, where, getDocs, doc, addDoc, onSnapshot } from 'firebase/firestore';
 import { loadStripe } from '@stripe/stripe-js';
-import db from '../../utils/firebase';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../features/userSlice';
+import db from '../../utils/firebase';
 import './index.css';
 
-const STRIPE_API_KEY =process.env.REACT_APP_STRIPE_API_KEY;
+const STRIPE_API_KEY = process.env.REACT_APP_STRIPE_API_KEY;
 
 function Plans() {
   const [products, setProducts] = useState([]);
@@ -74,7 +74,8 @@ function Plans() {
   };
 
   return (
-    <div className='plansScreen'> <br />
+    <div className='plansScreen'>
+      <br />
       {subscription && <p>Renewal date: {new Date(subscription?.current_period_end * 1000).toLocaleDateString()}</p>}
       {products &&
         Object.entries(products).map(([productId, productData]) => {

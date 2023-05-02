@@ -6,6 +6,7 @@ import Login from './screens/LoginScreen';
 import PlayerScreen from './screens/PlayerScreen';
 import MoviesScreen from './screens/MoviesScreen';
 import TVShowsScreen from './screens/TVShowsScreen';
+import UserListScreen from './screens/UserListScreen';
 import { auth } from './utils/firebase';
 import { login, logout } from './features/userSlice';
 import './App.css';
@@ -91,6 +92,14 @@ function App() {
           element={
             <ProtectedRoute isLoggedIn={isLoggedIn}>
               <TVShowsScreen />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path='/mylist'
+          element={
+            <ProtectedRoute isLoggedIn={isLoggedIn}>
+              <UserListScreen />
             </ProtectedRoute>
           }
         />
