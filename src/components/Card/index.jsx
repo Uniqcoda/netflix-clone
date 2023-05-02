@@ -11,6 +11,7 @@ import { removeMovieFromLiked, addToLikes } from '../../store';
 import video from '../../assets/video.mp4';
 import './index.css';
 
+
 function Card({ movieData, isLiked = false }) {
   const navigate = useNavigate();
   const [isHovered, setIsHovered] = useState(false);
