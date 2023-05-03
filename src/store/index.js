@@ -89,7 +89,6 @@ export const addToLikes = createAsyncThunk('netflix/addLike', async ({ movieData
     } else {
       // create new list
       const movieListsRef = collection(db, 'movie-lists');
-      console.log({ movieListsRef });
       await addDoc(movieListsRef, {
         userId,
         movies: [movieData],
@@ -114,8 +113,24 @@ export const getUsersLikedMovies = createAsyncThunk('netflix/getLiked', async (u
   return userList;
 });
 
-export const removeMovieFromLiked = createAsyncThunk('netflix/deleteLiked', async ({ movieData, userId }) => {
-  // todo
+export const removeMovieFromLiked = createAsyncThunk('netflix/deleteLiked', async ({ movieId, userId }) => {
+  try {
+    // Get user's movie list
+    const q = query(collection(db, 'movie-lists'), where('userId', '==', userId));
+    const querySnapshot = await getDocs(q);
+
+    const docSnapshot = querySnapshot.docs[0];
+    const movieList = docSnapshot.data();
+    // Get movie index and remove movie from list
+    const index = movieList.movies.findIndex((movie) => movie.id === movieId);
+    if (index !== -1) movieList.movies.splice(index, 1);
+    // update list in db
+    await updateDoc(doc(db, 'movie-lists', docSnapshot.id), { movies: movieList.movies });
+    alert('Movie removed from your list');
+    return movieList.movies || [];
+  } catch (error) {
+    console.log({ error });
+  }
 });
 
 const NetflixSlice = createSlice({
@@ -132,9 +147,6 @@ const NetflixSlice = createSlice({
     builder.addCase(fetchDataByGenre.fulfilled, (state, action) => {
       state.movies = action.payload;
     });
-    // builder.addCase(addToLikes.fulfilled, (state, action) => {
-    //   state.movies = action.payload;
-    // });
     builder.addCase(getUsersLikedMovies.fulfilled, (state, action) => {
       state.userList = action.payload;
     });
