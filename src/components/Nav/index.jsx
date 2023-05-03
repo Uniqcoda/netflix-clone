@@ -79,7 +79,7 @@ function Nav() {
           />
         </div>
         <div className='nav__notifications'>
-          <FaRegBell />
+          <FaRegBell title='Notifications'/>
         </div>
         <div
           className='nav__avatar'
@@ -91,7 +91,7 @@ function Nav() {
             <img src={NetflixAvatar} alt='' />
           </span>
           <span>
-            <FaCaretDown />
+            <FaCaretDown title='View profile'/>
           </span>
         </div>
       </div>

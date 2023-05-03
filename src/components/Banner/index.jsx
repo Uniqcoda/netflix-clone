@@ -45,11 +45,11 @@ function Banner() {
         </h1>
         <div className='banner__buttons'>
           <button className='banner__button' onClick={() => navigate('/player')}>
-            <FaPlay />
+            <FaPlay title='Play movie'/>
             Play
           </button>
           <button className='banner__button'>
-            <AiOutlineInfoCircle />
+            <AiOutlineInfoCircle title='More info'/>
             More Info
           </button>
         </div>
