@@ -2,10 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaPlay } from 'react-icons/fa';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
-import axios from '../../utils/axios';
-import Requests from '../../utils/Requests';
+import axios from 'axios';
 import NetflixBanner from '../../assets/Netflix-banner.png';
-
+import { API_KEY, TMDB_BASE_URL } from '../../utils/constants';
 import './index.css';
 
 function Banner() {
@@ -19,7 +18,7 @@ function Banner() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const request = await axios.get(Requests.fetchNetflixOriginals);
+      const request = await axios.get(`${TMDB_BASE_URL}/discover/tv?api_key=${API_KEY}&with_networks=213`);
       const movies = request.data.results;
       setMovie(movies[Math.floor(Math.random() * movies.length - 1)]);
       return request;

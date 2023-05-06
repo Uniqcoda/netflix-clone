@@ -8,7 +8,7 @@ import MoviesScreen from './screens/MoviesScreen';
 import TVShowsScreen from './screens/TVShowsScreen';
 import UserListScreen from './screens/UserListScreen';
 import { auth } from './utils/firebase';
-import { login, logout } from './features/userSlice';
+import { login, logout } from './store/userSlice';
 import './App.css';
 import ProfileScreen from './screens/ProfileScreen';
 
