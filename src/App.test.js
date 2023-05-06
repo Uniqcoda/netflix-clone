@@ -6,7 +6,7 @@ import { store } from './store';
 import App from './App';
 
 describe('Renders App', () => {
-  it('renders App component', () => {
+  test('renders App component', () => {
     render(
       <Provider store={store}>
         <MemoryRouter>
