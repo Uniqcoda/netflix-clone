@@ -36,6 +36,7 @@ function LoginScreen() {
             Sign In
           </button>
         )}
+
         <div className='loginScreen__gradient'></div>
       </div>
       <div className='loginScreen__body'>

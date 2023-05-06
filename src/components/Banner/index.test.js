@@ -3,7 +3,7 @@ import { MemoryRouter } from 'react-router-dom';
 
 import Banner from './index';
 
-test('should show login form', () => {
+test('should show the home page banner with the play and more buttons', () => {
   render(
     <MemoryRouter>
       <Banner />

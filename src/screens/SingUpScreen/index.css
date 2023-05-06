@@ -37,6 +37,10 @@
   margin-top: 20px;
 }
 
+.error-alert {
+  color: white;
+}
+
 .signUpScreen > form > h4 {
   text-align: left;
   margin-top: 30px;
