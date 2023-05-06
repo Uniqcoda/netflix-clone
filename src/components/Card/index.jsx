@@ -6,7 +6,7 @@ import { BsHandThumbsUp, BsHandThumbsDown } from 'react-icons/bs';
 import { BiChevronDown } from 'react-icons/bi';
 import { BsCheck } from 'react-icons/bs';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectUser } from '../../features/userSlice';
+import { selectUser } from '../../store/userSlice';
 import { removeMovieFromLiked, addToLikes } from '../../store';
 import video from '../../assets/video.mp4';
 import './index.css';

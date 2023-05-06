@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { collection, query, where, getDocs, doc, addDoc, onSnapshot } from 'firebase/firestore';
 import { loadStripe } from '@stripe/stripe-js';
 import { useSelector } from 'react-redux';
-import { selectUser } from '../../features/userSlice';
+import { selectUser } from '../../store/userSlice';
 import db from '../../utils/firebase';
 import './index.css';
 
@@ -13,43 +13,47 @@ function Plans() {
   const [subscription, setSubscription] = useState(null);
   const user = useSelector(selectUser);
 
-  useEffect(() => {
-    (async () => {
-      const docRef = doc(db, 'customers', user.uid);
-      const collectionRef = collection(docRef, 'subscriptions');
-      const docSnap = await getDocs(collectionRef);
+  const fetchSubscription = useCallback(async () => {
+    const docRef = doc(db, 'customers', user.uid);
+    const collectionRef = collection(docRef, 'subscriptions');
+    const docSnap = await getDocs(collectionRef);
 
-      docSnap.forEach((subscription) => {
-        setSubscription({
-          role: subscription.data().role,
-          current_period_end: subscription.data().current_period_end.seconds,
-          current_period_start: subscription.data().current_period_start.seconds,
-        });
+    docSnap.forEach((subscription) => {
+      setSubscription({
+        role: subscription.data().role,
+        current_period_end: subscription.data().current_period_end.seconds,
+        current_period_start: subscription.data().current_period_start.seconds,
       });
-    })();
+    });
   }, [user.uid]);
 
   useEffect(() => {
-    (async () => {
-      const productsRef = collection(db, 'products');
-      const q = query(productsRef, where('active', '==', true));
-      const querySnapshot = await getDocs(q);
-      const productsObj = {};
+    fetchSubscription();
+  }, [fetchSubscription]);
 
-      querySnapshot.forEach(async (productDoc) => {
-        productsObj[productDoc.id] = productDoc.data();
-        const priceSnap = await getDocs(collection(productDoc.ref, 'prices'));
+  const fetchProducts = async () => {
+    const productsRef = collection(db, 'products');
+    const q = query(productsRef, where('active', '==', true));
+    const querySnapshot = await getDocs(q);
+    const productsObj = {};
 
-        priceSnap.docs.forEach((price) => {
-          productsObj[productDoc.id].prices = {
-            priceId: price.id,
-            priceData: price.data(),
-          };
-        });
+    querySnapshot.forEach(async (productDoc) => {
+      productsObj[productDoc.id] = productDoc.data();
+      const priceSnap = await getDocs(collection(productDoc.ref, 'prices'));
+
+      priceSnap.docs.forEach((price) => {
+        productsObj[productDoc.id].prices = {
+          priceId: price.id,
+          priceData: price.data(),
+        };
       });
+    });
 
-      setProducts(productsObj);
-    })();
+    setProducts(productsObj);
+  };
+
+  useEffect(() => {
+    fetchProducts();
   }, []);
 
   const loadCheckout = async (priceId) => {

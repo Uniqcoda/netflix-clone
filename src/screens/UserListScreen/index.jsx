@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectUser } from '../../features/userSlice';
+import { selectUser } from '../../store/userSlice';
 import Card from '../../components/Card';
 import Nav from '../../components/Nav';
 import { getUsersLikedMovies } from '../../store';

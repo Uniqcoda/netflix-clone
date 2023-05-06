@@ -2,10 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaPlay } from 'react-icons/fa';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
-import axios from '../../utils/axios';
-import Requests from '../../utils/Requests';
+import axios from 'axios';
 import NetflixBanner from '../../assets/Netflix-banner.png';
-
+import { API_KEY, TMDB_BASE_URL } from '../../utils/constants';
 import './index.css';
 
 function Banner() {
@@ -18,14 +17,29 @@ function Banner() {
   };
 
   useEffect(() => {
+    // Create a cancel token source
+    const source = axios.CancelToken.source();
+
     const fetchData = async () => {
-      const request = await axios.get(Requests.fetchNetflixOriginals);
-      const movies = request.data.results;
-      setMovie(movies[Math.floor(Math.random() * movies.length - 1)]);
-      return request;
+      try {
+        const request = await axios.get(`${TMDB_BASE_URL}/discover/tv?api_key=${API_KEY}&with_networks=213`, {
+          cancelToken: source.token,
+        });
+        const movies = request.data.results;
+        setMovie(movies[Math.floor(Math.random() * movies.length - 1)]);
+        return request;
+      } catch (error) {
+        console.log(error.message);
+      }
     };
 
     fetchData();
+
+    // Cleanup function
+    return () => {
+      // Cancel the request when the component unmounts or when the request is no longer needed
+      source.cancel('Request canceled by cleanup');
+    };
   }, []);
 
   return (
@@ -45,11 +59,11 @@ function Banner() {
         </h1>
         <div className='banner__buttons'>
           <button className='banner__button' onClick={() => navigate('/player')}>
-            <FaPlay title='Play movie'/>
+            <FaPlay title='Play movie' />
             Play
           </button>
           <button className='banner__button'>
-            <AiOutlineInfoCircle title='More info'/>
+            <AiOutlineInfoCircle title='More info' />
             More Info
           </button>
         </div>

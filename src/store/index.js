@@ -2,7 +2,7 @@ import { configureStore, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios';
 import { collection, query, where, getDocs, doc, addDoc, updateDoc } from 'firebase/firestore';
 import db from '../utils/firebase';
-import userReducer from '../features/userSlice';
+import userReducer from '../store/userSlice';
 import { API_KEY, TMDB_BASE_URL } from '../utils/constants';
 
 const initialState = {
@@ -39,8 +39,7 @@ const createArrayFromRawData = (array, moviesArray, genres) => {
 
 const getRawData = async (api, genres, paging = false) => {
   const moviesArray = [];
-  // There are 20 movies per page for each API request, therefore, this loop will run 3 times to fetch 60 movies.
-  // If any movie is skipped due to the back_drop condition, then the loop will run more times but less than 10 times.
+  // There are 20 movies per request, run at-least 3 times to fetch 60 movies.
   for (let i = 1; moviesArray.length < 60 && i < 10; i++) {
     const {
       data: { results },
