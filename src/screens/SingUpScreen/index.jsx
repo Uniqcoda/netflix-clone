@@ -1,10 +1,12 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../utils/firebase';
 import './index.css';
 
 function SignUpScreen({ email }) {
+  const [formError, setFormError] = useState(null);
+
   const emailRef = useRef(email);
   const passwordRef = useRef(null);
   const navigate = useNavigate();
@@ -13,11 +15,12 @@ function SignUpScreen({ email }) {
     // Validate email using a regular expression
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email.match(emailRegex)) {
-      alert('Please enter a valid email address');
+      setFormError('Please enter a valid email address');
       return false;
     }
     if (password.length < 6) {
-      alert('Password should be at least 6 characters');
+      setFormError('Password should be at least 6 characters');
+
       return false;
     }
     return true;
@@ -37,8 +40,7 @@ function SignUpScreen({ email }) {
         if (user) navigate('/');
       })
       .catch((error) => {
-        const errorMessage = error.message;
-        alert(errorMessage);
+        setFormError('Wrong email or password');
       });
   };
 
@@ -48,7 +50,6 @@ function SignUpScreen({ email }) {
     const passwordValue = passwordRef.current.value;
 
     if (!validateForm(emailValue, passwordValue)) return;
-
     signInWithEmailAndPassword(auth, emailValue, passwordValue)
       .then((userCredential) => {
         // Signed in
@@ -56,8 +57,7 @@ function SignUpScreen({ email }) {
         if (user) navigate('/');
       })
       .catch((error) => {
-        const errorMessage = error.message;
-        alert(errorMessage);
+        setFormError('Wrong email or password');
       });
   };
 
@@ -67,6 +67,10 @@ function SignUpScreen({ email }) {
         <h1>Sign In</h1>
         <input ref={emailRef} defaultValue={email} type='email' placeholder='Email' name='email' id='email' required />
         <input ref={passwordRef} type='password' placeholder='Password' name='password' id='password' required />
+        <p className='error-alert' role='alert'>
+          {formError || ''}
+        </p>
+
         <button type='submit' onClick={signIn}>
           Sign In
         </button>
