@@ -50,7 +50,6 @@ function SignUpScreen({ email }) {
     const passwordValue = passwordRef.current.value;
 
     if (!validateForm(emailValue, passwordValue)) return;
-
     signInWithEmailAndPassword(auth, emailValue, passwordValue)
       .then((userCredential) => {
         // Signed in
