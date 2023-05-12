@@ -13,6 +13,8 @@ function Plans() {
   const [subscription, setSubscription] = useState(null);
   const user = useSelector(selectUser);
 
+  // Wrap in a `useCallback` to memoize the fetched subscription and 
+  // prevent a refetch each time this component mounts, as long as user ID does nt change 
   const fetchSubscription = useCallback(async () => {
     const docRef = doc(db, 'customers', user.uid);
     const collectionRef = collection(docRef, 'subscriptions');
