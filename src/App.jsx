@@ -9,8 +9,9 @@ import TVShowsScreen from './screens/TVShowsScreen';
 import UserListScreen from './screens/UserListScreen';
 import { auth } from './utils/firebase';
 import { login, logout } from './store/userSlice';
-import './App.css';
 import ProfileScreen from './screens/ProfileScreen';
+import LoadingSpinner from './components/LoadingSpinner';
+import './App.css';
 
 const ProtectedRoute = ({ isLoggedIn, children }) => {
   if (!isLoggedIn) {
@@ -28,6 +29,7 @@ const AuthRoute = ({ isLoggedIn, children }) => {
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoading, setIsLoading] = useState(true); 
 
   const dispatch = useDispatch();
 
@@ -47,10 +49,15 @@ function App() {
         dispatch(logout);
         setIsLoggedIn(false);
       }
+      setIsLoading(false);
     });
 
     return unsubscribe;
   }, [dispatch]);
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <div className='app'>
