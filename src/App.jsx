@@ -10,6 +10,7 @@ import UserListScreen from './screens/UserListScreen';
 import { auth } from './utils/firebase';
 import { login, logout } from './store/userSlice';
 import ProfileScreen from './screens/ProfileScreen';
+import NotFoundScreen from './screens/NotFoundScreen';
 import LoadingSpinner from './components/LoadingSpinner';
 import './App.css';
 
@@ -118,6 +119,7 @@ function App() {
             </AuthRoute>
           }
         />
+        <Route path="*" element={<NotFoundScreen/>} />
       </Routes>
     </div>
   );
