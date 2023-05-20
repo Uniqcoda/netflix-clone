@@ -71,7 +71,7 @@ function SignUpScreen({ email }) {
           {formError || ''}
         </p>
 
-        <button type='submit' onClick={signIn}>
+        <button type='submit' onClick={signIn} data-testid='sign-in'>
           Sign In
         </button>
         <h4>

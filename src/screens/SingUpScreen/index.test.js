@@ -10,163 +10,143 @@ jest.mock('firebase/auth', () => ({
   getAuth: jest.fn(() => ({})),
 }));
 
-describe('SignUpScreen', () => {
+const MockSignUpScreen = ({ email }) => {
+  return (
+    <MemoryRouter>
+      <SignUpScreen email={email} />
+    </MemoryRouter>
+  );
+};
+
+describe('SignUpScreen:', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
 
-  test('renders email and password input elements', () => {
-    render(
-      <MemoryRouter>
-        <SignUpScreen />
-      </MemoryRouter>
-    );
-    const emailInput = screen.getByPlaceholderText('Email');
-    const passwordInput = screen.getByPlaceholderText('Password');
+  describe('Visible elements:', () => {
+    test('shows the right elements on page render', () => {
+      render(<MockSignUpScreen />);
+      const emailInput = screen.getByPlaceholderText(/email/i);
+      const passwordInput = screen.getByPlaceholderText('Password');
+      const invalidEmail = screen.queryByText('Please enter a valid email address');
+      const invalidPassword = screen.queryByText('Password should be at least 6 characters');
+      const wrongCredentials = screen.queryByText('Wrong email or password');
 
-    expect(emailInput).toBeInTheDocument();
-    expect(passwordInput).toBeInTheDocument();
-  });
-
-  test('Sign In: displays error message for invalid email', () => {
-    render(
-      <MemoryRouter>
-        <SignUpScreen />
-      </MemoryRouter>
-    );
-    const emailInput = screen.getByPlaceholderText('Email');
-    const passwordInput = screen.getByPlaceholderText('Password');
-    const signInButton = screen.queryAllByText('Sign In')[1];
-
-    fireEvent.change(emailInput, { target: { value: 'invalid.email' } });
-    fireEvent.change(passwordInput, { target: { value: 'password' } });
-    fireEvent.click(signInButton);
-
-    const errorMessage = screen.getByRole('alert');
-    expect(errorMessage).toHaveTextContent('Please enter a valid email address');
-    expect(signInWithEmailAndPassword).toHaveBeenCalledTimes(0);
-  });
-
-  test('Sign In: displays error message for short password', () => {
-    render(
-      <MemoryRouter>
-        <SignUpScreen />
-      </MemoryRouter>
-    );
-    const emailInput = screen.getByPlaceholderText('Email');
-    const passwordInput = screen.getByPlaceholderText('Password');
-    const signInButton = screen.queryAllByText('Sign In')[1];
-
-    fireEvent.change(emailInput, { target: { value: 'validemail@example.com' } });
-    fireEvent.change(passwordInput, { target: { value: 'pass' } });
-    fireEvent.click(signInButton);
-
-    const errorMessage = screen.getByRole('alert');
-    expect(errorMessage).toHaveTextContent('Password should be at least 6 characters');
-    expect(signInWithEmailAndPassword).toHaveBeenCalledTimes(0);
-  });
-
-  test('Sign In: calls signInWithEmailAndPassword on valid form submission', async () => {
-    render(
-      <MemoryRouter>
-        <SignUpScreen />
-      </MemoryRouter>
-    );
-    //  Mock the signInWithEmailAndPassword function to return user details
-    signInWithEmailAndPassword.mockResolvedValueOnce({
-      user: {
-        email: 'validemail@example.com',
-        uid: 'sampleId',
-      },
+      expect(emailInput).toBeInTheDocument();
+      expect(passwordInput).toBeInTheDocument();
+      expect(invalidEmail).toBeNull();
+      expect(invalidPassword).toBeNull();
+      expect(wrongCredentials).toBeNull();
     });
 
-    const emailInput = screen.getByPlaceholderText('Email');
-    const passwordInput = screen.getByPlaceholderText('Password');
-    const signInButton = screen.queryAllByText('Sign In')[1];
+    test('automatically fills in email from login page', () => {
+      render(<MockSignUpScreen email={'example@mail.com'} />);
 
-    fireEvent.change(emailInput, { target: { value: 'validemail@example.com' } });
-    fireEvent.change(passwordInput, { target: { value: 'password123' } });
-    fireEvent.click(signInButton);
+      const emailInput = screen.getByPlaceholderText('Email');
+      expect(emailInput).toHaveValue('example@mail.com');
+      expect(emailInput.defaultValue).toBe('example@mail.com');
+    });
+  });
 
-    // Wait for the signInWithEmailAndPassword call to finish
-    await waitFor(() => {
+  describe('Functionality:', () => {
+    const fillAndSubmitForm = (email, password, button) => {
+      const emailInput = screen.getByPlaceholderText('Email');
+      const passwordInput = screen.getByPlaceholderText('Password');
+      fireEvent.change(emailInput, { target: { value: email } });
+      fireEvent.change(passwordInput, { target: { value: password } });
+      fireEvent.click(button);
+    };
+
+    test('displays error message for invalid email', () => {
+      render(<MockSignUpScreen />);
+      const signInButton = screen.getByRole('button', { name: 'Sign In' });
+      fillAndSubmitForm('invalid.email', 'password', signInButton);
+
+      const errorMessage = screen.getByRole('alert');
+      expect(errorMessage).toHaveTextContent('Please enter a valid email address');
+      expect(signInWithEmailAndPassword).toHaveBeenCalledTimes(0);
+    });
+
+    test('displays error message for short password', () => {
+      render(<MockSignUpScreen />);
+      const signInButton = screen.getByRole('button', { name: 'Sign In' });
+      fillAndSubmitForm('validemail@example.com', 'pass', signInButton);
+
+      const errorMessage = screen.getByRole('alert');
+      expect(errorMessage).toHaveTextContent('Password should be at least 6 characters');
+      expect(signInWithEmailAndPassword).toHaveBeenCalledTimes(0);
+    });
+
+    test('Sign In: calls signInWithEmailAndPassword on valid form submission', async () => {
+      render(<MockSignUpScreen />);
+
+      //  Mock the signInWithEmailAndPassword function to return user details
+      signInWithEmailAndPassword.mockResolvedValue({
+        user: {
+          email: 'validemail@example.com',
+          uid: 'sampleId',
+        },
+      });
+
+      const signInButton = screen.getByRole('button', { name: 'Sign In' });
+      fillAndSubmitForm('validemail@example.com', 'password123', signInButton);
+
       expect(signInWithEmailAndPassword).toHaveBeenCalledWith({}, 'validemail@example.com', 'password123');
+      expect(signInWithEmailAndPassword).toHaveBeenCalledTimes(1);
     });
-    expect(signInWithEmailAndPassword).toHaveBeenCalledTimes(1);
-  });
 
-  test('Sign In: displays error message for wrong email or password', async () => {
-    render(
-      <MemoryRouter>
-        <SignUpScreen />
-      </MemoryRouter>
-    );
-    //  Mock the signInWithEmailAndPassword function to throw an error
-    signInWithEmailAndPassword.mockRejectedValueOnce(new Error('Wrong email or password'));
+    test('Sign In: displays error message for wrong email or password', async () => {
+      render(<MockSignUpScreen />);
 
-    const emailInput = screen.getByPlaceholderText('Email');
-    const passwordInput = screen.getByPlaceholderText('Password');
-    const signInButton = screen.queryAllByText('Sign In')[1];
+      //  Mock the signInWithEmailAndPassword function to throw an error
+      signInWithEmailAndPassword.mockRejectedValue(new Error('Wrong email or password'));
 
-    fireEvent.change(emailInput, { target: { value: 'validemail@example.com' } });
-    fireEvent.change(passwordInput, { target: { value: 'wrongpassword' } });
-    fireEvent.click(signInButton);
+      const signInButton = screen.getByRole('button', { name: 'Sign In' });
+      fillAndSubmitForm('validemail@example.com', 'wrongpassword', signInButton);
 
-    // Wait for the error message to be displayed
-    await waitFor(() => {
-      const errorMessage = screen.getByRole('alert');
-      expect(errorMessage).toHaveTextContent('Wrong email or password');
+      expect(signInWithEmailAndPassword).toHaveBeenCalledWith({}, 'validemail@example.com', 'wrongpassword');
+
+      // Wait for the error message to be displayed
+      await waitFor(() => {
+        const errorMessage = screen.getByRole('alert');
+        expect(errorMessage).toHaveTextContent('Wrong email or password');
+      });
     });
-    expect(signInWithEmailAndPassword).toHaveBeenCalledTimes(1);
-  });
 
-  test('Sign Up: calls createUserWithEmailAndPassword on valid registration', async () => {
-    render(
-      <MemoryRouter>
-        <SignUpScreen />
-      </MemoryRouter>
-    );
-    //  Mock the createUserWithEmailAndPassword function to return user details
-    createUserWithEmailAndPassword.mockResolvedValueOnce({
-      user: {
-        email: 'validemail@example.com',
-        uid: 'sampleId',
-      },
+    test('Sign Up: calls createUserWithEmailAndPassword on valid registration', async () => {
+      render(<MockSignUpScreen />);
+
+      //  Mock the createUserWithEmailAndPassword function to return user details
+      createUserWithEmailAndPassword.mockResolvedValue({
+        user: {
+          email: 'validemail@example.com',
+          uid: 'sampleId',
+        },
+      });
+      const signUpLink = screen.getByText('Sign up now.');
+
+      fillAndSubmitForm('validemail@example.com', 'password123', signUpLink);
+
+      expect(createUserWithEmailAndPassword).toHaveBeenCalledWith({}, 'validemail@example.com', 'password123');
+      expect(createUserWithEmailAndPassword).toHaveBeenCalledTimes(1);
     });
-    const emailInput = screen.getByPlaceholderText('Email');
-    const passwordInput = screen.getByPlaceholderText('Password');
-    const signUpLink = screen.getByText('Sign up now.');
 
-    fireEvent.change(emailInput, { target: { value: 'validemail@example.com' } });
-    fireEvent.change(passwordInput, { target: { value: 'password123' } });
-    fireEvent.click(signUpLink);
+    test('Sign Up: displays error message for registration failure', async () => {
+      render(<MockSignUpScreen />);
 
-    expect(createUserWithEmailAndPassword).toHaveBeenCalledWith({}, 'validemail@example.com', 'password123');
-    expect(createUserWithEmailAndPassword).toHaveBeenCalledTimes(1);
-  });
+      // Mock the createUserWithEmailAndPassword function to throw an error
+      createUserWithEmailAndPassword.mockRejectedValue(new Error('Registration failed'));
 
-  test('Sign Up: displays error message for registration failure', async () => {
-    render(
-      <MemoryRouter>
-        <SignUpScreen />
-      </MemoryRouter>
-    );
-    // Mock the createUserWithEmailAndPassword function to throw an error
-    createUserWithEmailAndPassword.mockRejectedValueOnce(new Error('Registration failed'));
+      const signUpLink = screen.getByText('Sign up now.');
 
-    const emailInput = screen.getByPlaceholderText('Email');
-    const passwordInput = screen.getByPlaceholderText('Password');
-    const signUpLink = screen.getByText('Sign up now.');
+      fillAndSubmitForm('validemail@example.com', 'password123', signUpLink);
 
-    fireEvent.change(emailInput, { target: { value: 'validemail@example.com' } });
-    fireEvent.change(passwordInput, { target: { value: 'password123' } });
-    fireEvent.click(signUpLink);
-
-    // Wait for the error message to be displayed
-    await waitFor(() => {
-      const errorMessage = screen.getByRole('alert');
-      expect(errorMessage).toHaveTextContent('Wrong email or password');
+      expect(createUserWithEmailAndPassword).toHaveBeenCalledTimes(1);
+      // Wait for the error message to be displayed
+      await waitFor(() => {
+        const errorMessage = screen.getByRole('alert');
+        expect(errorMessage).toHaveTextContent('Wrong email or password');
+      });
     });
-    expect(createUserWithEmailAndPassword).toHaveBeenCalledTimes(1);
   });
 });
