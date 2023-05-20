@@ -29,7 +29,7 @@ function LoginScreen() {
   return (
     <div className='loginScreen'>
       <div className='loginScreen__background'>
-        <img src={NetflixLogo} alt='' className='loginScreen__logo' />
+        <img data-testid='company-logo' src={NetflixLogo} alt='' className='loginScreen__logo' />
         {/* Sign In Nav Button */}
         {!signIn && (
           <button className='loginScreen__button' onClick={() => setSignIn(true)}>

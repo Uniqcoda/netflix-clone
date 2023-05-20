@@ -9,6 +9,7 @@ describe('Renders Login screen', () => {
         <LoginScreen />
       </MemoryRouter>
     );
+    expect(screen.getByTestId('company-logo')).toBeVisible();
     expect(screen.getByText('Sign In')).toBeInTheDocument();
     expect(screen.getByText('Unlimited films, TV programmes and more.')).toBeInTheDocument();
     expect(screen.getByText('Watch anywhere. Cancel at any time.')).toBeInTheDocument();
