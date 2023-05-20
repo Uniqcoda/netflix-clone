@@ -77,7 +77,8 @@
   max-width: 600px;
 }
 
-.loginScreen__getStarted {
+.loginScreen__getStarted,
+.loginScreen__guestLogin {
   padding: 16px 20px;
   font-size: 1rem;
   color: #fff;
@@ -94,11 +95,11 @@
   .loginScreen__body > h1 {
     font-size: 2.2rem;
   }
-  
+
   .loginScreen__body > h2 {
     font-size: 1.5rem;
   }
-  
+
   .loginScreen__body > h3 {
     font-size: 1rem;
   }
@@ -107,14 +108,15 @@
     width: 130px;
   }
 
-.loginScreen__input > form > input {
-  padding: 8px;
-  outline-width: 0;
-  height: 27px;
-  width: 50%;
-}
-  
-  .loginScreen__getStarted {
+  .loginScreen__input > form > input {
+    padding: 8px;
+    outline-width: 0;
+    height: 27px;
+    width: 40%;
+  }
+
+  .loginScreen__getStarted,
+  .loginScreen__guestLogin {
     padding: 14px 18px;
     font-size: 0.8rem;
     font-weight: 600;

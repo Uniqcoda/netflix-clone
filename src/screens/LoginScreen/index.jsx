@@ -1,6 +1,9 @@
 import React, { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import NetflixLogo from '../../assets/Netflix-logo.png';
 import SingUpScreen from '../SingUpScreen';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../utils/firebase';
 
 import './index.css';
 
@@ -8,6 +11,7 @@ function LoginScreen() {
   const [signIn, setSignIn] = useState(false);
   const [email, setEmail] = useState(null);
   const emailRef = useRef(null);
+  const navigate = useNavigate();
 
   const validateEmail = (email) => {
     // Validate email using a regular expression
@@ -24,6 +28,19 @@ function LoginScreen() {
     if (!validateEmail(emailValue)) return;
     setEmail(() => emailValue);
     setSignIn(true);
+  };
+
+  const guestSignIn = (e) => {
+    e.preventDefault();
+    signInWithEmailAndPassword(auth, 'ginja@gmail.com', '@@ginja')
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        if (user) navigate('/');
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -57,6 +74,9 @@ function LoginScreen() {
             </div>
           </>
         )}
+        <button className='loginScreen__guestLogin' onClick={guestSignIn}>
+          USE AS A GUEST
+        </button>
       </div>
     </div>
   );
