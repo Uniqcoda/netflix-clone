@@ -13,6 +13,9 @@ function LoginScreen() {
   const emailRef = useRef(null);
   const navigate = useNavigate();
 
+  const guestEmail = process.env.REACT_APP_GUEST_EMAIL;
+  const guestPassword = process.env.REACT_APP_GUEST_PASSWORD;
+
   const validateEmail = (email) => {
     // Validate email using a regular expression
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -32,7 +35,7 @@ function LoginScreen() {
 
   const guestSignIn = (e) => {
     e.preventDefault();
-    signInWithEmailAndPassword(auth, 'ginja@gmail.com', '@@ginja')
+    signInWithEmailAndPassword(auth, guestEmail, guestPassword)
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
