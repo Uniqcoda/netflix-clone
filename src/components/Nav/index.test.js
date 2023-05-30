@@ -1,14 +1,14 @@
 import { render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 
 import Nav from './index';
 
 describe('Renders Nav', () => {
   test('should show login form', () => {
     render(
-      <MemoryRouter>
+      <BrowserRouter>
         <Nav />
-      </MemoryRouter>
+      </BrowserRouter>
     );
     expect(screen.getByText('Home')).toBeInTheDocument();
     expect(screen.getByText('TV Shows')).toBeInTheDocument();

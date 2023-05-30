@@ -67,10 +67,11 @@ function SignUpScreen({ email }) {
         <h1>Sign In</h1>
         <input ref={emailRef} defaultValue={email} type='email' placeholder='Email' name='email' id='email' required />
         <input ref={passwordRef} type='password' placeholder='Password' name='password' id='password' required />
-        <p className='error-alert' role='alert'>
-          {formError || ''}
-        </p>
-
+        {formError && (
+          <p className='error-alert' role='alert'>
+            {formError}
+          </p>
+        )}
         <button type='submit' onClick={signIn} data-testid='sign-in'>
           Sign In
         </button>
