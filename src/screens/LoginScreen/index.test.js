@@ -1,13 +1,13 @@
 import { render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import LoginScreen from './index';
 
 describe('Renders Login screen', () => {
   test('renders Login screen', () => {
     render(
-      <MemoryRouter>
+      <BrowserRouter>
         <LoginScreen />
-      </MemoryRouter>
+      </BrowserRouter>
     );
     expect(screen.getByTestId('company-logo')).toBeVisible();
     expect(screen.getByText('Sign In')).toBeInTheDocument();

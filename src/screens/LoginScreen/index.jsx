@@ -75,11 +75,12 @@ function LoginScreen() {
                 </button>
               </form>
             </div>
+
+            <button className='loginScreen__guestLogin' onClick={guestSignIn}>
+              USE AS A GUEST
+            </button>
           </>
         )}
-        <button className='loginScreen__guestLogin' onClick={guestSignIn}>
-          USE AS A GUEST
-        </button>
       </div>
     </div>
   );

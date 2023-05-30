@@ -4,7 +4,7 @@ import './index.css';
 
 function LoadingSpinner() {
   return (
-    <div className='loadingSpinner'>
+    <div data-testid='loading-spinner' className='loadingSpinner'>
       <img
         src={NetflixLogo}
         alt='loading'
